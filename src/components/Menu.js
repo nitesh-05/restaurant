@@ -11,7 +11,11 @@ const Menu = ({ dishes }) => {
     if (selectedDish != null) {
       return (
         <Card>
-          <CardImg width="100%" src={dish.image} alt="Selected dish image" />
+          <CardImg
+            width="100%"
+            src={process.env.PUBLIC_URL + dish.image}
+            alt="Selected dish image"
+          />
           <CardBody>
             <CardText>{dish.description}</CardText>
             <CardText>${dish.price}</CardText>
@@ -27,7 +31,11 @@ const Menu = ({ dishes }) => {
     return (
       <div className="col-12 col-md-3 mt-2" key={dish.id}>
         <Card onClick={() => onDishSelect(dish)}>
-          <CardImg width="100%" src={dish.image} alt="Dish image" />
+          <CardImg
+            width="100%"
+            src={process.env.PUBLIC_URL + dish.image}
+            alt="Dish image"
+          />
           <CardImgOverlay style={{ fontSize: "1.5em" }}>
             {dish.name}
           </CardImgOverlay>

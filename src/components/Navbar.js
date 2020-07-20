@@ -16,7 +16,7 @@ const NavBar = (props) => {
 
   return (
     <div>
-      <Navbar color="faded" light>
+      <Navbar color="faded" light expand="md">
         <NavbarBrand href="/" className="mr-auto">
           Restaurant
         </NavbarBrand>
