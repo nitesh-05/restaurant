@@ -1,7 +1,7 @@
 import React from "react";
 
 export const Menu = ({ dishes, onClick }) => {
-  console.log(dishes);
+  // console.log(dishes);
   const menu = dishes.map((dish) => {
     return (
       <div
@@ -14,7 +14,7 @@ export const Menu = ({ dishes, onClick }) => {
         <div className="col-12 col-md-2" style={{ textAlign: "center" }}>
           <img
             src={process.env.PUBLIC_URL + dish.image}
-            alt="Food img"
+            alt={dish.name}
             width="100"
           />
         </div>

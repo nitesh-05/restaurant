@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Menu } from "./Menu_test";
-
-import { DISHES } from "./data";
 import DishDetails from "./DishDetails";
+import { DISHES } from "./data";
 
 function MainContainer() {
   const dishes = DISHES;
+
   const [selectedDish, setSelectedDish] = useState(null);
   const onDishSelect = (dish) => {
     setSelectedDish(dish);
   };
-  console.log(selectedDish);
+  // console.log(selectedDish);
   return (
     <div className="container">
       <div className="row">
