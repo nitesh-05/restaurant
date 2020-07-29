@@ -8,44 +8,42 @@ import About from "./About";
 import Contact from "./Contact";
 import MenuDishDetail from "./MenuDishDetail";
 
-import { DISHES } from "./shared/dishes";
-import { COMMENTS } from "./shared/comments";
-import { PROMOTIONS } from "./shared/promotions";
-import { LEADERS } from "./shared/leaders";
+import { Route, Switch, Redirect, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
-import { Route, Switch, Redirect } from "react-router-dom";
+const mapStateToProps = (state) => {
+  return {
+    dishes: state.dishes,
+    comments: state.comments,
+    promotions: state.promotions,
+    leaders: state.leaders,
+  };
+};
 
-const Main = () => {
-  const dishes = DISHES;
-  const comments = COMMENTS;
-  const promotions = PROMOTIONS;
-  const leaders = LEADERS;
-
-  // console.log(dishes.length);
-
+const Main = (props) => {
   const HomePage = () => {
     return (
       <Home
-        dish={dishes.filter((dish) => dish.featured)[0]}
-        promotion={promotions.filter((promo) => promo.featured)[0]}
-        leader={leaders.filter((leader) => leader.featured)[0]}
+        dish={props.dishes.filter((dish) => dish.featured)[0]}
+        promotion={props.promotions.filter((promo) => promo.featured)[0]}
+        leader={props.leaders.filter((leader) => leader.featured)[0]}
       />
     );
   };
   const Menu = () => {
-    return <CardMenu dishes={dishes} />;
+    return <CardMenu dishes={props.dishes} />;
   };
   const DishWithId = ({ match }) => {
     // console.log(match.params.dishId);
-    if (match.params.dishId < dishes.length) {
+    if (match.params.dishId < props.dishes.length) {
       return (
         <MenuDishDetail
           dish={
-            dishes.filter(
+            props.dishes.filter(
               (dish) => dish.id === parseInt(match.params.dishId, 10)
             )[0]
           }
-          comments={comments.filter(
+          comments={props.comments.filter(
             (comment) => comment.dishId === parseInt(match.params.dishId, 10)
           )}
         />
@@ -56,7 +54,7 @@ const Main = () => {
   };
 
   const Aboutus = () => {
-    return <About leaders={leaders} />;
+    return <About leaders={props.leaders} />;
   };
 
   return (
@@ -77,4 +75,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default withRouter(connect(mapStateToProps)(Main));
