@@ -1,24 +1,24 @@
 //react-hook-form   https://www.youtube.com/watch?v=bU_eq8qyjic&feature=emb_rel_end  //
 // https://react-hook-form.com/api/
+// https://www.npmjs.com/package/react-redux-form
+
 import React from "react";
 import { useForm } from "react-hook-form";
+import { Control, LocalForm, Errors, controls } from "react-redux-form";
 import {
   Breadcrumb,
   BreadcrumbItem,
   Col,
   Button,
-  Form,
-  FormGroup,
   Label,
-  Input,
+  Row,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const Contact = (props) => {
-  const { register, handleSubmit, errors } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
-    alert(JSON.stringify(data));
+  const handleSubmit = (values) => {
+    console.log("Current state is :" + JSON.stringify(values));
+    alert("Current state is :" + JSON.stringify(values));
   };
   return (
     <div className="container-fluid">
@@ -81,121 +81,111 @@ const Contact = (props) => {
           <h3>Send us your Feedback</h3>
         </div>
         <div className="col-md-10 col-12 m-auto">
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <FormGroup row>
+          <LocalForm onSubmit={(values) => handleSubmit(values)}>
+            <Row className="form-group">
               <Label htmlFor="firstName" md={2}>
                 First Name
               </Label>
               <Col md={4}>
-                <Input
-                  type="text"
+                <Control.text
+                  model=".firstName"
                   name="firstName"
-                  // id="firstName"
+                  id="firstName"
                   placeholder="First Name"
-                  innerRef={register({
-                    required: "Enter your first name.",
-                  })}
+                  className="form-control"
                 />
-                {errors.firstName && <p>{errors.firstName.message}</p>}
               </Col>
               <Label htmlFor="lastName" md={2}>
                 Last Name
               </Label>
               <Col md={4}>
-                <Input
-                  type="text"
+                <Control.text
+                  model=".lastName"
                   name="lastName"
-                  // id="lastName"
+                  id="lastName"
                   placeholder="Last Name"
-                  innerRef={register({ required: true })}
+                  className="form-control"
                 />
-                {errors.lastName && <p>Enter a lastname</p>}
               </Col>
-            </FormGroup>
-            <FormGroup row>
+            </Row>
+            <Row className="form-group">
               <Label htmlFor="email" md={2}>
                 Email
               </Label>
               <Col md={4}>
-                <Input
-                  type="email"
+                <Control.text
+                  model=".email"
                   name="email"
                   id="email"
                   placeholder="abc@gmail.com"
-                  innerRef={register}
+                  className="form-control"
                 />
               </Col>
               <Label htmlFor="telNum" md={2}>
                 Phone
               </Label>
               <Col md={4}>
-                <Input
-                  type="text"
+                <Control.text
+                  model=".telNum"
                   name="telNum"
                   id="telNum"
                   placeholder="876543210"
-                  innerRef={register({
-                    pattern: {
-                      value: /^\d+$/,
-                      message: "Only number allowed",
-                    },
-                    minLength: { value: 10, message: "Invalid Phone Number" },
-                    maxLength: { value: 13, message: "Invalid Number" },
-                  })}
+                  className="form-control"
                 />
-                {errors.telNum && <p>{errors.telNum.message}</p>}
               </Col>
-            </FormGroup>
-            <FormGroup row>
+            </Row>
+            <Row className="form-group">
               <Col md={{ size: 5, offset: 2 }}>
-                <FormGroup check>
+                <div className="form-check">
                   <Label check>
-                    <Input
+                    <Control.checkbox
+                      model=".agree"
                       type="checkbox"
                       name="agree"
-                      innerRef={register}
                       id="checkbox"
+                      className="form-check-input"
                     />
                     <strong>May we contact you</strong>
                   </Label>
-                </FormGroup>
+                </div>
               </Col>
               <Col md={{ size: 4, offset: 1 }}>
-                <Input
+                <Control.select
+                  model=".contactType"
                   type="select"
                   name="contactType"
                   id="select"
-                  innerRef={register}
+                  className="form-control"
                 >
                   <option>Email</option>
                   <option>Phone</option>
-                </Input>
+                </Control.select>
               </Col>
-            </FormGroup>
+            </Row>
 
-            <FormGroup row>
+            <Row className="form-group">
               <Label for="feedback" md={2}>
                 Your Feedback
               </Label>
               <Col md={10}>
-                <Input
-                  type="textarea"
+                <Control.textarea
+                  model=".message"
                   name="texmessage"
                   id="message"
                   rows="6"
-                  innerRef={register}
+                  className="form-control"
                 />
               </Col>
-            </FormGroup>
+            </Row>
 
-            <FormGroup row>
+            <Row className="form-group">
               <Col md={{ size: 10, offset: 2 }}>
                 <Button type="submit" color="primary">
                   Send feedback
                 </Button>
               </Col>
-            </FormGroup>
-          </Form>
+            </Row>
+          </LocalForm>
         </div>
       </div>
     </div>
