@@ -4,7 +4,7 @@
 
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Control, LocalForm, Errors, controls } from "react-redux-form";
+import { Control, LocalForm, Errors } from "react-redux-form";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,6 +14,14 @@ import {
   Row,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+
+// custom validators
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !val || val.length <= len;
+const minLength = (len) => (val) => val && val.length >= len;
+const isNumber = (val) => !isNaN(Number(val));
+const validEmail = (val) =>
+  /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
 const Contact = (props) => {
   const handleSubmit = (values) => {
@@ -93,6 +101,21 @@ const Contact = (props) => {
                   id="firstName"
                   placeholder="First Name"
                   className="form-control"
+                  validators={{
+                    required,
+                    minLength: minLength(3),
+                    maxLength: maxLength(10),
+                  }}
+                />
+                <Errors
+                  model=".firstName"
+                  className="text-danger"
+                  show="touched"
+                  messages={{
+                    required: "Required ",
+                    minLength: "minimum 3 character.",
+                    maxLength: "max 10 char allowed",
+                  }}
                 />
               </Col>
               <Label htmlFor="lastName" md={2}>
@@ -105,6 +128,21 @@ const Contact = (props) => {
                   id="lastName"
                   placeholder="Last Name"
                   className="form-control"
+                  validators={{
+                    required,
+                    minLength: minLength(3),
+                    maxLength: maxLength(15),
+                  }}
+                />
+                <Errors
+                  model=".lastName"
+                  className="text-danger"
+                  show="touched"
+                  messages={{
+                    required: "Required ",
+                    minLength: "Minimum 3 character.",
+                    maxLength: "Maximum 15 char allowed",
+                  }}
                 />
               </Col>
             </Row>
@@ -119,6 +157,16 @@ const Contact = (props) => {
                   id="email"
                   placeholder="abc@gmail.com"
                   className="form-control"
+                  validators={{ required, validEmail }}
+                />
+                <Errors
+                  model=".email"
+                  className="text-danger"
+                  show="touched"
+                  messages={{
+                    required: "Email is required. ",
+                    validEmail: "Invalid email address",
+                  }}
                 />
               </Col>
               <Label htmlFor="telNum" md={2}>
@@ -131,6 +179,19 @@ const Contact = (props) => {
                   id="telNum"
                   placeholder="876543210"
                   className="form-control"
+                  validators={{
+                    required,
+                    isNumber,
+                  }}
+                />
+                <Errors
+                  model=".telNum"
+                  className="text-danger"
+                  show="touched"
+                  messages={{
+                    required: "Required ",
+                    isNumber: "Must be a number",
+                  }}
                 />
               </Col>
             </Row>
